@@ -1,0 +1,57 @@
+.forms
+	background-repeat no-repeat
+	background-size cover
+	background-position center center
+	width 100%
+	position fixed
+	height 100%
+	z-index 0
+	padding-top 100px
+	padding-bottom 110px
+	overflow auto
+	&:before
+		content ''
+		background-color rgba(0,0,0,.6)
+		width 100%
+		position fixed
+		height 100vh
+		top 0
+		left 0
+	&_form
+		margin 0 auto !important
+		&_auth
+			width 424px
+			margin 0 auto
+			padding 40px 25px
+			background-color rgba(0,0,0,.6)
+			border-radius 6px
+.el-input
+	input
+		background-color #4c5559
+		border-color #4c5559
+		color white
+		height 48px
+		&::placeholder
+			color white
+		&:focus
+			border-color $PrimaryColor
+	&.el-date-editor
+		width 100%
+	&.is-active
+		.el-input__inner
+			border-color $PrimaryColor
+.el-form
+	max-width 324px
+	margin 0 auto
+	h3
+		color white
+		font-size 30px
+		font-weight 300
+		line-height 2.5
+	.el-button
+		height 48px
+		width 100%
+	.button_green
+		background-color $PrimaryColor
+		border-color $PrimaryColor
+		color white
