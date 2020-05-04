@@ -101,13 +101,13 @@ export default {
 		},
 		getRegister(){
 			let self = this;
-			this.$axios.post(process.env.baseUrl+'auth/signup', self.formRegister)
+			self.$axios.post(process.env.baseUrl+'auth/signup', self.formRegister)
 			.then(data=>{
 				console.log('data',data)
-				this.getLogin();
+				self.getLogin();
 			}).catch(error =>{
-				this.loadingForm = false;
-				this.$message({
+				self.loadingForm = false;
+				self.$message({
 					showClose: true,
 					message: error.response.data.error,
 					type: 'error',
@@ -135,7 +135,7 @@ export default {
 				if(localStorage.pathItem){
 					this.$router.push(localStorage.pathItem);
 				}else{
-					this.$router.push('/');
+					this.$router.push('/companies');
 				}
       }catch(e){
 				this.loadingForm = false;

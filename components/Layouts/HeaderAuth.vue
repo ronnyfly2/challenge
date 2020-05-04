@@ -26,4 +26,6 @@ export default {
 }
 </script>
 <style lang="stylus">
+header
+	background-color #000000
 </style>

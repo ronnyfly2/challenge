@@ -68,7 +68,7 @@ export default {
 				if(localStorage.pathItem){
 					this.$router.push(localStorage.pathItem);
 				}else{
-					this.$router.push('/');
+					this.$router.push('/companies');
 				}
       }catch(e){
 				this.loadingForm = false;

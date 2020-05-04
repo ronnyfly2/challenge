@@ -1,9 +1,10 @@
 <template lang="pug">
-	#app
+	.app
 		Header
-		section.container
-			nuxt
-			Footer
+		el-container
+			el-main
+				nuxt
+		Footer
 </template>
 <script>
 import Header from '~/components/Layouts/Header.vue';

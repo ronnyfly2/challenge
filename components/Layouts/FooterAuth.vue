@@ -13,12 +13,4 @@ export default {
 </script>
 <style lang="stylus">
 @require '../../assets/css/_variables.styl'
-footer
-	&.footer_auth
-		background-color black
-		margin-top 0
-		position fixed
-		bottom 0
-		width 100%
-		color white
 </style>

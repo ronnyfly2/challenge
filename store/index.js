@@ -5,6 +5,10 @@ export const state = () => ({
 	isLoged: false,
 	isRegisterPage:false,
 	user:{},
+	userId:null,
+	cartItem:{
+
+	}
 })
 
 export const mutations = {
@@ -19,6 +23,18 @@ export const mutations = {
 	},
 	setAuth(state, bool) {
 		state.isLoged = bool;
+	},
+	setUserId(state, objct){
+		state.userId = objct._id;
+	},
+	setUser(state, objct){
+		state.user.name=objct.name;
+		state.user.email=objct.email;
+		state.user.companyId=objct.companyId;
+		state.user._id=objct._id;
+	},
+	setCart(state, objct){
+		state.cartItem = objct;
 	},
 }
 export const actions = {
@@ -43,6 +59,8 @@ export const actions = {
 			.then(result => {
 				vuexContext.commit('setToken', result.sessionId);
 				vuexContext.commit('setAuth', true);
+				//vuexContext.commit('setUser', {name:result.name,email:result.email,companyId:result.companyId,'_id':result.id});
+				//vuexContext.commit('setUserId', {'_id':result._id});
 				localStorage.setItem('token', result.sessionId);
 				localStorage.setItem('tokenExpiration', new Date().getTime() * 2000);
 				Cookie.set('jwt', result.sessionId);
@@ -75,11 +93,6 @@ export const actions = {
 				.split(';')
 				.find(c => c.trim().startsWith('expirationDate='))
 				.split('=')[1];
-			userBand = req.headers.cookie
-				.split(';')
-				.find(c => c.trim().startsWith('setIdUs='))
-				.split('=')[1];
-			vuexContext.commit('setUserId', {'_id':userBand});
 		} else {
 			token = localStorage.getItem('token');
 			expirationDate = localStorage.getItem('tokenExpiration');
@@ -103,6 +116,7 @@ export const actions = {
 			vuexContext.commit("setAuth", false);
 			Cookie.remove("jwt");
 			Cookie.remove("expirationDate");
+			Cookie.remove("setIdUs");
 			if (process.client) {
 				localStorage.removeItem("token");
 				localStorage.removeItem("tokenExpiration");
@@ -110,7 +124,33 @@ export const actions = {
 			localStorage.clear()
 		}
 	},
-
+	getUSer(vuexContext, payload){
+		this.$axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+		return new Promise((resolve, reject)=>{
+			this.$axios.$get(process.env.baseUrl+'users/me')
+			.then(result => {
+				vuexContext.commit('setUser', {name:result.name,email:result.email,companyId:result.companyId,'_id':result.id});
+				resolve(result)
+			})
+			.catch(e => {
+				reject(e.response.data)
+			});
+		})
+	},
+	getCartItem(vuexContext, data){
+		this.$axios.defaults.headers.common['OrderKey'] = data.header;
+		return new Promise((resolve, reject)=>{
+			console.log('kooo', this.$axios.defaults.headers)
+			this.$axios.$post(process.env.baseUrl+'carts/product', data.data)
+			.then(result => {
+				vuexContext.commit('setCart', result);
+				resolve(result)
+			})
+			.catch(e => {
+				reject(e.response.data)
+			});
+		})
+	}
 }
 
 export const getters = {

@@ -1,6 +1,6 @@
 export default function(context) {
   if (!context.store.getters.isAuthenticated) {
-		context.redirect("/");
+		context.redirect("/companies");
   }
 }
 //export default function(context) {
