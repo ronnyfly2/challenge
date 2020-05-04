@@ -102,12 +102,54 @@ export default {
 		getRegister(){
 			let self = this;
 			this.$axios.post(process.env.baseUrl+'auth/signup', self.formRegister)
-			.then((data)=>{
+			.then(data=>{
+				console.log('data',data)
 				this.getLogin();
+			}).catch(error =>{
 				this.loadingForm = false;
-			}).catch((error) =>{
-				this.loadingForm = false;
+				this.$message({
+					showClose: true,
+					message: error.response.data.error,
+					type: 'error',
+					duration:6000
+				})
 			})
+		},
+		async getLogin(){
+			try{
+        await this.$store.dispatch('authenticateUser', {
+          email: this.formRegister.email,
+          password: this.formRegister.password
+				})
+				this.$notify({
+          title: 'Éxito',
+          message: 'Gracias por registrarte',
+          type: 'success'
+        });
+				//this.$message({
+					//showClose: true,
+          //message: 'Gracias por registrarte',
+					//type: 'success',
+					//duration:6000
+				//});
+				if(localStorage.pathItem){
+					this.$router.push(localStorage.pathItem);
+				}else{
+					this.$router.push('/');
+				}
+      }catch(e){
+				this.loadingForm = false;
+				this.$message({
+					showClose: true,
+          message: e.message,
+					type: 'error',
+					duration:6000
+        })
+      }
+		},
+		sendFalse(){
+			console.log('this', this.$store.commit('setPageRegister', false))
+			//this.$root.$children[2].$children[0].loginBool = false;
 		}
 	}
 }

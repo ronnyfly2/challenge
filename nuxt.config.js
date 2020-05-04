@@ -22,12 +22,12 @@ module.exports = {
   server: {
     port: 4000, // default: 3000
     host: 'localhost',
-    timing: false
+    //timing: false
   },
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: '#409EFF' },
   /*
   ** Global CSS
   */

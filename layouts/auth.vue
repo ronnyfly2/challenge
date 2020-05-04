@@ -9,6 +9,7 @@
 import HeaderAuth from '~/components/Layouts/HeaderAuth.vue';
 import FooterAuth from '~/components/Layouts/FooterAuth.vue';
 export default {
+	middleware:['check-auth','auth'],
 	components:{
 		HeaderAuth,
 		FooterAuth,
@@ -21,6 +22,9 @@ export default {
 	},
 	mounted () {
 		let self = this;
+		//console.log('mount reg',this.$router.history.current.name)
+		//self.onResize();
+		//section.forms(v-if="!$store.state.isLoged")
 	}
 }
 </script>
