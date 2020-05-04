@@ -126,12 +126,12 @@ export default {
 		},
 		sendEditCompany(){
 			let self = this;
-			axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-			axios.put(process.env.baseUrl+'companies/'+this.defaultIdCompany, self.form)
+			axios.put(`${process.env.baseUrl}companies/${this.defaultIdCompany}`, self.form)
 			.then(data=>{
-				this.dialogFormVisible = false;
+				self.dialogFormVisible = false;
+				self.dataGetCompanies();
 			}).catch(error =>{
-				this.dialogFormVisible = false;
+				self.dialogFormVisible = false;
 				self.$message({
 					showClose: true,
 					message: error,
