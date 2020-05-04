@@ -1,5 +1,4 @@
 <template lang="pug">
-el-container
 	el-header
 		el-row(:gutter="20")
 			el-col(:span="12")

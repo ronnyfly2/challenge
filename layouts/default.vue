@@ -10,6 +10,7 @@
 import Header from '~/components/Layouts/Header.vue';
 import Footer from '~/components/Layouts/Footer.vue';
 export default {
+	middleware: ['check-auth'],
 	components:{
 		Header,
 		Footer,

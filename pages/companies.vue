@@ -1,7 +1,7 @@
 <template lang="pug">
 	fragment
 		h1 companies
-		el-dialog(title="Editar Company" :visible.sync="dialogFormVisible")
+		el-dialog(:title="defaultIdCompany?'Editar Company':'Create Company'" :visible.sync="dialogFormVisible")
 			el-form(:model="form")
 				el-form-item(label="Nombre")
 					el-input(v-model="form.name" autocomplete="off")
@@ -11,10 +11,10 @@
 					el-input(v-model="form.website" autocomplete="off")
 			span(slot="footer" class="dialog-footer")
 				el-button(@click="dialogFormVisible = false") Cancel
-				el-button(type="primary" @click="sendEditCompany") Editar
+				el-button(type="primary" @click="sendEditCompany(defaultIdCompany)") {{ defaultIdCompany?'Editar':'Crear' }}
 		el-row(:gutter="20" v-if="companies && companies.length>0")
 			el-col(:span="24")
-				el-button(type="text" class="button" v-if="!activeButtonCompanie") Crear Compañia
+				el-button.button(v-if="!activeButtonCompanie" @click="openEdit(null)") Crear Compañia
 			el-col(:span="6" v-for="(item, idx) in companies" :key="idx")
 				el-card(:body-style="{ padding: '0px' }" :class="companyUser.length>0 && companyUser[idx] && activeButtonCompanie? 'opera':''")
 					div
@@ -30,7 +30,7 @@
 import axios from 'axios';
 //- import {mapGetters} from 'vuex';
 export default {
-	middleware: ["check-auth", "auth"],
+	middleware:['check-auth', 'user'],
 	data(){
 		return{
 			token:null,
@@ -119,13 +119,38 @@ export default {
 		},
 		openEdit(id){
 			this.dialogFormVisible = true;
-			this.form.name = this.companies[id].name;
-			this.form.ruc = this.companies[id].ruc;
-			this.form.website = this.companies[id].website;
-			this.defaultIdCompany = this.companies[id].id;
+			if(id){
+				this.form.name = this.companies[id].name;
+				this.form.ruc = this.companies[id].ruc;
+				this.form.website = this.companies[id].website;
+				this.defaultIdCompany = this.companies[id].id;
+			}else{
+				this.form.name = null;
+				this.form.ruc = null;
+				this.form.website = null;
+				this.defaultIdCompany = null;
+			}
 		},
-		sendEditCompany(){
+		sendEditCompany(id){
 			let self = this;
+			if(!id){
+				axios.post(`${process.env.baseUrl}companies/create_join`, self.form)
+				.then(data=>{
+					self.dialogFormVisible = false;
+					self.$store.dispatch('getUSer', self.$store.state.user._id).then(res=>{
+						self.dataGetCompanies();
+					})
+				}).catch(error =>{
+					self.dialogFormVisible = false;
+					self.$message({
+						showClose: true,
+						message: error,
+						type: 'error',
+						duration:6000
+					})
+				})
+				return
+			}
 			axios.put(`${process.env.baseUrl}companies/${this.defaultIdCompany}`, self.form)
 			.then(data=>{
 				self.dialogFormVisible = false;

@@ -1,9 +1,9 @@
 <template lang="pug">
 	#app
-		HeaderAuth()
+		HeaderAuth
 		section.container
 			nuxt
-			FooterAuth()
+			FooterAuth
 </template>
 <script>
 import HeaderAuth from '~/components/Layouts/HeaderAuth.vue';
@@ -22,9 +22,6 @@ export default {
 	},
 	mounted () {
 		let self = this;
-		//console.log('mount reg',this.$router.history.current.name)
-		//self.onResize();
-		//section.forms(v-if="!$store.state.isLoged")
 	}
 }
 </script>

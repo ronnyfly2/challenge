@@ -6,9 +6,6 @@ export const state = () => ({
 	isRegisterPage:false,
 	user:{},
 	userId:null,
-	cartItem:{
-
-	}
 })
 
 export const mutations = {
@@ -32,9 +29,6 @@ export const mutations = {
 		state.user.email=objct.email;
 		state.user.companyId=objct.companyId;
 		state.user._id=objct._id;
-	},
-	setCart(state, objct){
-		state.cartItem = objct;
 	},
 }
 export const actions = {
@@ -121,8 +115,10 @@ export const actions = {
 				localStorage.removeItem("token");
 				localStorage.removeItem("tokenExpiration");
 			}
-			localStorage.clear()
+			localStorage.clear();
+			this.$router.push('/');
 		}
+
 	},
 	getUSer(vuexContext, payload){
 		this.$axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
@@ -137,20 +133,6 @@ export const actions = {
 			});
 		})
 	},
-	getCartItem(vuexContext, data){
-		this.$axios.defaults.headers.common['OrderKey'] = data.header;
-		return new Promise((resolve, reject)=>{
-			console.log('kooo', this.$axios.defaults.headers)
-			this.$axios.$post(process.env.baseUrl+'carts/product', data.data)
-			.then(result => {
-				vuexContext.commit('setCart', result);
-				resolve(result)
-			})
-			.catch(e => {
-				reject(e.response.data)
-			});
-		})
-	}
 }
 
 export const getters = {

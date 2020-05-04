@@ -1,5 +1,5 @@
 <template lang="pug">
-	footer.footer_auth
+	el-footer.footer_auth
 		el-row(:gutter="20")
 			el-col(:span="12")
 				p © Challenge - Derechos reservados del autor
@@ -13,4 +13,11 @@ export default {
 </script>
 <style lang="stylus">
 @require '../../assets/css/_variables.styl'
+footer
+	&.footer_auth
+		background-color black
+		margin-top 0
+		bottom 0
+		width 100%
+		color white
 </style>

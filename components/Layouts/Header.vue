@@ -30,10 +30,8 @@ header
 				.register(v-else)
 					nuxt-link.session(to="/login")
 						span Iniciar sesión
-						i.el-icon-user-solid
-					nuxt-link.btn.btn_green(to="/register")
+					nuxt-link.btn(to="/register")
 						span Registrate
-						i.el-icon-edit-outline
 </template>
 <script>
 import { actions, mapState } from 'vuex'
@@ -169,16 +167,6 @@ export default {
 		.register
 			.session
 			.btn
-				display inline-block
-			i
-				display none
-		.btn
-			&_green
-				text-align center
-				background green
-				cursor pointer
-				height 34px
-				padding 7px 10px
 				display inline-block
 		.session
 			width 55%
