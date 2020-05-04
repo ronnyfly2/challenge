@@ -15,16 +15,18 @@
 		el-row(:gutter="20" v-if="companies && companies.length>0")
 			el-col(:span="24")
 				el-button.button(v-if="!activeButtonCompanie" @click="openEdit(null)") Crear Compañia
-			el-col(:span="6" v-for="(item, idx) in companies" :key="idx")
+			el-col( :xs="24" :sm="12" :md="8" :lg="8" :xl="6" v-for="(item, idx) in companies" :key="idx")
 				el-card(:body-style="{ padding: '0px' }" :class="companyUser.length>0 && companyUser[idx] && activeButtonCompanie? 'opera':''")
 					div
 						p {{ item.name }}
 						.bottom.clearfix
 						time.time RUC: {{ item.ruc }}
+						.bottom.clearfix
+						a.block(:href="item.website" target="_blank" v-if="item.website") {{ item.website }}
 						el-button.button_block(v-if="!activeButtonCompanie" @click="joinUser(item.id)") Choose
 						el-button.button_block(v-if="companyUser.length>0 && companyUser[idx] && activeButtonCompanie" @click="openEdit(idx)") Edit
 						el-button.button_block(v-if="companyUser.length>0 && companyUser[idx] && activeButtonCompanie" @click="leaveUser") Leave
-		el-row(v-else) no tenemos
+		el-row(v-else) no tenemos companies aún.
 </template>
 <script>
 import axios from 'axios';
@@ -101,7 +103,7 @@ export default {
 		leaveUser(){
 			let self = this;
 			self.$axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-			self.$axios.post(process.env.baseUrl+'companies/leave')
+			self.$axios.post(`${process.env.baseUrl}companies/leave`)
 			.then(data=>{
 				self.$store.dispatch('getUSer', self.$store.state.user._id).then(res=>{
 					self.getCompanyUser();

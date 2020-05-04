@@ -148,7 +148,7 @@ export default {
 	&_logo
 		width 22%
 		h1
-			font-size 0
+			font-size 25px
 			img
 				width 100%
 				max-width 159px
