@@ -16,7 +16,7 @@ header
 						.el-dropdown-link
 							.user_list(v-if="goLoad" :loading="loadingGet")
 								i(class="el-icon-loading")
-							.user_list(v-else) {{ userInfo.name }} {{ userInfo.lastName }}
+							.user_list(v-else) {{ userInfo.name }}
 							i(class="el-icon-arrow-down el-icon--right")
 						el-dropdown-menu.header_menu(slot="dropdown")
 							el-dropdown-item
@@ -53,20 +53,19 @@ export default {
 	},
 	mounted(){
 		let self = this;
-		if(this.$store.state.isLoged){
+		if(self.$store.state.isLoged){
 			self.loadingGet = true;
-			this.$store.dispatch('getUSer', this.$store.state.userId).then((res)=>{
+			self.$store.dispatch('getUSer', self.$store.state.userId).then((res)=>{
 				self.loadingGet = false;
 				self.goLoad = false;
 				self.userInfo.name = res.name;
 				self.userInfo.lastName = res.last_name;
 			}).catch(()=>{
-				this.$store.dispatch('logout');
+				self.$store.dispatch('logout');
 			})
 		}
 	},
 	methods:{
-		//-...mapMutations(['setUser']),
 		getLogout(){
 			this.$store.dispatch('logout');
 		}

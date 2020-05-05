@@ -12,10 +12,10 @@
 				h1.title CHALLENGE
 				h2.subtitle Mira los Productos
 				nuxt-link.session(to="/companies") Companies
-					ul( v-if="products&&products.length>0")
-						li( v-for="(item, idx) in products" :key="idx")
-							p {{ item.name }}
-					ul(v-else) {{ 'gika' }}
+				ul( v-if="products&&products.length>0")
+					li( v-for="(item, idx) in products" :key="idx")
+						p {{ item.name }}
+				ul(v-else) {{ 'gika' }}
 
 </template>
 

@@ -45,7 +45,9 @@ export default {
 				name:null,
 				ruc: null,
 				website: null
-			}
+			},
+			closeInterval:0,
+			setIntervalUser:null
 		}
 	},
 	mounted(){
@@ -58,12 +60,19 @@ export default {
 			axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 			self.$axios.get(process.env.baseUrl+'companies').then(res=>{
 				self.companies= res.data;
-				setTimeout(
-				()=>{
-						self.getCompanyUser();
-					}, 200
-				)
+				self.onStore();
 			})
+		},
+		onStore(){
+			let self = this;
+			self.setIntervalUser = setInterval(()=>{
+				if(self.$store.state.user){
+					self.closeInterval = 1;
+					self.getCompanyUser();
+				}else{
+					console.log('no ejecuta');
+				}
+			}, 1)
 		},
 		getCompanyUser(){
 			let self = this;
@@ -81,6 +90,7 @@ export default {
 					}
 				}
 			})
+			clearInterval(self.setIntervalUser);
 		},
 		joinUser(idCompany){
 			let self = this;

@@ -31,8 +31,8 @@
     "pug-plain-loader": "^1.0.0",
     "prettier": "^2.0.5",
     "@vue/test-utils": "^1.0.0-beta.33",
-    "babel-jest": "^25.5.1",
-    "jest": "^25.5.4",
+    "babel-jest": "^26.0.0",
+    "jest": "^26.0.0",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "vue-jest": "^4.0.0-0"
